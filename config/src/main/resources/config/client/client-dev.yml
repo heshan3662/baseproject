@@ -1,0 +1,8 @@
+spring:
+  # 是否使用redis
+  isUseRedis: 0  #0 使用，1 不使用
+  #是否允许多台设备同时登陆  ,TODO 后期转到数据库进行配置，不用重启服务~~
+  login:
+    type: 1,2,3
+    multiple_logins: true,false,false
+    overtime: 7 #TOKEN 有效期

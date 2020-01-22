@@ -1,0 +1,30 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+server:
+  port: 8888
+
+spring:
+  application:
+    name:  config-server
+  profiles:
+    active: native  #配置本地配置文件必须激活内置的native,如若还需激活其他的就配置多个，如：native,dev
+  cloud:
+    config:
+      server:
+        #        git:
+        #          uri: https://github.com/chinoukin/SpringcloudConfig
+        # native为本地配置
+        native:
+          search-locations: classpath:/config,classpath:/config/datasource,classpath:/config/client
+        bootstrap: true
+
+management:
+  server:
+    port: 8889
+  endpoints:
+    web:
+      exposure:
+        include: "*"
