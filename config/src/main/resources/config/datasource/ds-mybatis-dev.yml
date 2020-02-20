@@ -1,13 +1,14 @@
 spring:
-    #    jdbctemplate 连接多数据源配置
-  db1:
+
+  #    mybatis 连接多数据源配置
+  db1-mybatis:
     datasource:
       jdbcurl: jdbc:mysql://127.0.0.1:3306/cloud-main?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
       username: root
       password: 123456
       driver-class-name: com.mysql.jdbc.Driver
       type: com.alibaba.druid.pool.DruidDataSource
-  db2:
+  db2-mybatis:
     datasource:
       jdbcurl: jdbc:mysql://127.0.0.1:3306/cloud-main?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
       username: root

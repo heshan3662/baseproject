@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/baseproject.iml" filepath="$PROJECT_DIR$/baseproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DBSourceServer/DBSourceServer.iml" filepath="$PROJECT_DIR$/DBSourceServer/DBSourceServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config/config.iml" filepath="$PROJECT_DIR$/config/config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eureka/eureka.iml" filepath="$PROJECT_DIR$/eureka/eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/login/login.iml" filepath="$PROJECT_DIR$/login/login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-zuul-master/service-zuul.iml" filepath="$PROJECT_DIR$/service-zuul-master/service-zuul.iml" />
     </modules>
   </component>
 </project>
