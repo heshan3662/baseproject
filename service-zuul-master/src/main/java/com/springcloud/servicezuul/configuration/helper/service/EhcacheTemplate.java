@@ -4,7 +4,8 @@ package com.springcloud.servicezuul.configuration.helper.service;
 
  import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import org.springframework.cache.Cache;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -19,7 +20,7 @@ import java.io.Serializable;
  * @since 01/02/2019
  */
 public class EhcacheTemplate<V extends Serializable> implements  CacheTemplate<V> {
-
+	@Autowired
 	private CacheManager ehcacheManager;
 	private String keyPrefix;
 

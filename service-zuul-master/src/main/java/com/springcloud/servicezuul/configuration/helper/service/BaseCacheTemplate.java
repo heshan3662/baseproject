@@ -3,7 +3,8 @@
 package com.springcloud.servicezuul.configuration.helper.service;
 
  import org.apache.commons.io.IOUtils;
-import org.springframework.cache.CacheManager;
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.cache.CacheManager;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -15,7 +16,10 @@ import java.io.Serializable;
  * @since 01/02/2019
  */
 public abstract class BaseCacheTemplate<V extends Serializable> implements  CacheTemplate<V> {
-
+	@Autowired
+	  CacheManager backup;
+	@Autowired
+	  JedisPool jedisPool;
 	/**
 	 * 默认缓存时间（90d）
 	 */
@@ -25,11 +29,10 @@ public abstract class BaseCacheTemplate<V extends Serializable> implements  Cach
 	final private boolean useRedis;
 
 	/**
-	 * @param jedisPool
-	 * @param backup The ehcache for backup
+
 	 * @param keyPrefix
 	 */
-	protected BaseCacheTemplate(JedisPool jedisPool, CacheManager backup, String keyPrefix) {
+	protected BaseCacheTemplate(  String keyPrefix) {
 		this.useRedis = testJedisPool(jedisPool);
 		if (this.useRedis) {
 			this.delegate = new  JedisCacheTemplate<>(jedisPool, keyPrefix);
@@ -43,7 +46,7 @@ public abstract class BaseCacheTemplate<V extends Serializable> implements  Cach
 	 * @param backup The ehcache for backup
 	 */
 	protected BaseCacheTemplate(JedisPool jedisPool, CacheManager backup) {
-		this(jedisPool, backup, null);
+		this(  null);
 	}
 
 	@Override

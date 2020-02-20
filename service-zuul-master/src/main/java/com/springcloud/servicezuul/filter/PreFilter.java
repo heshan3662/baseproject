@@ -62,7 +62,13 @@ public class PreFilter extends ZuulFilter {
         if(request.getRequestURI().indexOf("/v2/api-docs")>= 0 ){
             return false;
         }
-        if(request.getRequestURI().indexOf("/login/login_in")>= 0 ){
+        if(request.getRequestURI().indexOf("/user_login/login_in")>= 0 ){
+            return false;
+        }
+        if(request.getRequestURI().indexOf("/user_login/regist")>= 0 ){
+            return false;
+        }
+        if(request.getRequestURI().indexOf("/service-db/")>= 0 ){
             return false;
         }
         return true;
@@ -78,6 +84,7 @@ public class PreFilter extends ZuulFilter {
         //JWT
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
+
         try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -99,13 +106,12 @@ public class PreFilter extends ZuulFilter {
             token = request.getParameter("token");
         }
         System.out.println("页面传来的token值为：" + token);
-        //登录校验逻辑  如果token为null，则直接返回客户端，而不进行下一步接口调用
-
-        if (StringUtils.isBlank(token)) {
+        //登录校验逻辑  如果token无效，则直接返回客户端，而不进行下一步接口调用
+        DataRes dataRes =  cacheService.GetCacheForUserInfoByToken( request.getContextPath(),token);
+        if (dataRes.get_result_code() != 0) {
             // 过滤该请求，不对其进行路由
             requestContext.setSendZuulResponse(false);
-            DataRes dataRes = new DataRes(request.getRequestURI(), new Integer(-3), "未登陆");
-            //返回错误代码
+             //返回错误代码
             try {
                 (RequestContext.getCurrentContext()).getResponse().getWriter().write(dataRes.toString());
             } catch (Exception e) {

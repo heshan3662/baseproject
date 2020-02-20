@@ -59,16 +59,26 @@ public class CacheService {
             Object  obj =redisUtils.get("CLOUD_USER_INFO[" + token + "]");
             if(obj == null ){
                 redisUtils.delete("CLOUD_USER_INFO[" + token + "]");
-                dataRes = new DataRes(path, ResultCode.RESULT_ERROR, "请重新登录");
+                dataRes = new DataRes(path, ResultCode.RESULE_NOLOGIN, "请重新登录");
                 return  dataRes;
             }
             String data  = obj.toString();
             if(StringUtils.isBlank(data)){
                 redisUtils.delete("CLOUD_USER_INFO[" + token + "]");
-                dataRes = new DataRes(path, ResultCode.RESULT_ERROR, "请重新登录");
+                dataRes = new DataRes(path, ResultCode.RESULE_NOLOGIN, "请重新登录");
             }else{
-                dataRes = new DataRes(path, ResultCode.RESULT_SUCCESS, "成功");
-                dataRes.setData(JSON.parseObject(data,Map.class));
+                Map map = JSON.parseObject(data,Map.class);
+                String login_NAME = map.get("loginName").toString();
+                String type = map.get("type").toString();
+                Object   token_temp = redisUtils.get("CLOUD_USER_TOKEN_"+type+"[" + login_NAME + "]");
+                if(token_temp.equals(token)){
+                    dataRes = new DataRes(path, ResultCode.RESULT_SUCCESS, "成功");
+                    dataRes.setData(JSON.parseObject(data,Map.class));
+                }else {
+                    redisUtils.delete("CLOUD_USER_INFO[" + token + "]");
+                    dataRes = new DataRes(path, ResultCode.RESULE_NOLOGIN, "请重新登录");
+                }
+
             }
         }
         return  dataRes ;

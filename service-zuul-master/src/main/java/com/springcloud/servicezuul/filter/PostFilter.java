@@ -66,7 +66,7 @@ public class PostFilter extends ZuulFilter {
 
         System.out.println(request.getRequestURI());
         //需要权限校验URL
-//        if(request.getRequestURI().indexOf("/login/login_in")>= 0 ){
+//        if(request.getRequestURI().indexOf("/user_login/login_in")>= 0 ){
 //            return true;
 //        }
 

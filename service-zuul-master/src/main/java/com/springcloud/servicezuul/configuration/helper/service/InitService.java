@@ -2,10 +2,13 @@ package com.springcloud.servicezuul.configuration.helper.service;
 
 import com.springcloud.servicezuul.configuration.helper.entity.Status;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import springfox.documentation.annotations.Cacheable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,6 @@ public class InitService  {
      String  port ;
     @Value("${spring.isUseRedis}")
      String  isUseRedis ;
-
 
 
 
@@ -56,10 +58,10 @@ public class InitService  {
         testJedisPool(new JedisPool(host,new Integer(port)));
         return Status.success(name);
     }
-
+    @Cacheable(value="Boolen")
     private boolean testJedisPool(JedisPool jedisPool) {
         try {
-            Jedis jedis = jedisPool.getResource();
+             Jedis jedis = jedisPool.getResource();
             IOUtils.closeQuietly(jedis);
             return true;
         } catch (Exception ex) {
