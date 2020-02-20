@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,7 @@ import java.util.Map;
 @Api(tags = "jdbcTemplate", description = "数据库jdbctemplate连接方式")
 @RequestMapping("/jdbcTemplate")
 public class TemplateDBController {
-    @Value("${spring.redis.host}")
-     String host ;
-    @Value("${spring.isUseRedis}")
-    String  isUseRedis ;
+
     @Autowired
     DBTools DBTools;
     @Autowired
@@ -69,4 +67,23 @@ public class TemplateDBController {
     }
 
 
-  }
+    @ApiOperation(value = "查询返回总条数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="db",value="数据源",dataType="string", paramType = "query",required = true, allowableValues = "db1,db2" ,defaultValue ="db1"  ),
+            @ApiImplicitParam(name="sql",value="执行sql",dataType="string", paramType = "query",required = true,example="select *from gd_user",defaultValue ="" ),
+
+    })
+    @ResponseBody
+    @RequestMapping(value = "/queryForTotal", method = RequestMethod.POST)
+    public Long queryForTotal( @RequestParam(required = true)String  db ,
+                       @RequestParam(required = true)String sql  ) {
+        Map map = DBTools.queryforMap( db ,sql,  0)  ;
+        if (CollectionUtils.isEmpty(map)) {
+            return Long.valueOf(0);
+        }
+        Long   total = (Long) map.get("total");
+        return  total  ;
+    }
+
+
+}

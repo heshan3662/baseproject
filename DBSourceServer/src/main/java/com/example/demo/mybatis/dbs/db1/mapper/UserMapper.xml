@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.dbs.db1.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.dbs.db1.model.User" >
+    <constructor >
+      <idArg column="USER_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="LOGIN_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PASSWORD" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PHONE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EMAIL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="FULL_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="AVATAR_URL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="JOB_TITLE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="COM_ID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="DEPT_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ROLE_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IS_DISABLED" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="QUICK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="TOKEN" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, LOGIN_NAME, PASSWORD, PHONE, EMAIL, FULL_NAME, AVATAR_URL, JOB_TITLE, COM_ID, 
+    DEPT_ID, ROLE_ID, IS_DISABLED, QUICK_CODE, CREATED_BY, CREATED_ON, MODIFIED_ON, MODIFIED_BY, 
+    TOKEN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where USER_ID = #{userId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where USER_ID = #{userId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.dbs.db1.model.User"
+          useGeneratedKeys="true" keyProperty="userId">
+    <selectKey keyProperty="userId" resultType="String" order="BEFORE">
+      SELECT CONCAT("US-",seq('PRIMARYKEY'))
+    </selectKey>
+    insert into user (USER_ID, LOGIN_NAME, PASSWORD, 
+      PHONE, EMAIL, FULL_NAME, 
+      AVATAR_URL, JOB_TITLE, COM_ID, 
+      DEPT_ID, ROLE_ID, IS_DISABLED, 
+      QUICK_CODE, CREATED_BY, CREATED_ON, 
+      MODIFIED_ON, MODIFIED_BY, TOKEN
+      )
+    values (#{userId,jdbcType=CHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, 
+      #{avatarUrl,jdbcType=VARCHAR}, #{jobTitle,jdbcType=VARCHAR}, #{comId,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=CHAR}, #{roleId,jdbcType=CHAR}, #{isDisabled,jdbcType=CHAR}, 
+      #{quickCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=CHAR}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{modifiedOn,jdbcType=TIMESTAMP}, #{modifiedBy,jdbcType=CHAR}, #{token,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.dbs.db1.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="loginName != null" >
+        LOGIN_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME,
+      </if>
+      <if test="avatarUrl != null" >
+        AVATAR_URL,
+      </if>
+      <if test="jobTitle != null" >
+        JOB_TITLE,
+      </if>
+      <if test="comId != null" >
+        COM_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED,
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+      <if test="token != null" >
+        TOKEN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null" >
+        #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=CHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy,jdbcType=CHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.dbs.db1.model.User" >
+    update user
+    <set >
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        AVATAR_URL = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        JOB_TITLE = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null" >
+        COM_ID = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=CHAR},
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.dbs.db1.model.User" >
+    update user
+    set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      AVATAR_URL = #{avatarUrl,jdbcType=VARCHAR},
+      JOB_TITLE = #{jobTitle,jdbcType=VARCHAR},
+      COM_ID = #{comId,jdbcType=VARCHAR},
+      DEPT_ID = #{deptId,jdbcType=CHAR},
+      ROLE_ID = #{roleId,jdbcType=CHAR},
+      IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=CHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      TOKEN = #{token,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=CHAR}
+  </update>
+
+  <select id="selectForPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        AVATAR_URL = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        JOB_TITLE = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null" >
+        COM_ID = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=CHAR},
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+    </where>
+    limit #{start},#{end}
+  </select>
+
+  <select id="selectForPageCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*) from user
+    <where>
+      <if test="loginName != null" >
+        LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fullName != null" >
+        FULL_NAME = #{fullName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarUrl != null" >
+        AVATAR_URL = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        JOB_TITLE = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comId != null" >
+        COM_ID = #{comId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=CHAR},
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+    </where>
+  </select>
+</mapper>

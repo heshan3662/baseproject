@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.dbs.db1.dao.AuthPointMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.dbs.db1.model.AuthPoint" >
+    <constructor >
+      <idArg column="AUTH_ID" jdbcType="BIGINT" javaType="java.lang.String" />
+      <arg column="MODULE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TITLE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IS_DISABLED" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="QUICK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CREATED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="MODIFIED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    AUTH_ID, MODULE, TITLE, IS_DISABLED, QUICK_CODE, CREATED_ON, CREATED_BY, MODIFIED_ON, 
+    MODIFIED_BY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from auth_point
+    where AUTH_ID = #{authId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from auth_point
+    where AUTH_ID = #{authId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.dbs.db1.model.AuthPoint"
+          useGeneratedKeys="true" keyProperty="authId">
+    <selectKey keyProperty="authId" resultType="String" order="BEFORE">
+      SELECT CONCAT("AP-",seq('PRIMARYKEY'))
+    </selectKey>
+    insert into auth_point (AUTH_ID, MODULE, TITLE, 
+      IS_DISABLED, QUICK_CODE, CREATED_ON, 
+      CREATED_BY, MODIFIED_ON, MODIFIED_BY
+      )
+    values (#{authId,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{isDisabled,jdbcType=CHAR}, #{quickCode,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, 
+      #{createdBy,jdbcType=CHAR}, #{modifiedOn,jdbcType=TIMESTAMP}, #{modifiedBy,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.dbs.db1.model.AuthPoint" >
+    insert into auth_point
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="authId != null" >
+        AUTH_ID,
+      </if>
+      <if test="module != null" >
+        MODULE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED,
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="authId != null" >
+        #{authId,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.dbs.db1.model.AuthPoint" >
+    update auth_point
+    <set >
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </set>
+    where AUTH_ID = #{authId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.dbs.db1.model.AuthPoint" >
+    update auth_point
+    set MODULE = #{module,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=CHAR},
+      MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      MODIFIED_BY = #{modifiedBy,jdbcType=CHAR}
+    where AUTH_ID = #{authId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectForPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from auth_point
+    <where>
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+    limit #{start},#{end}
+  </select>
+
+  <select id="selectForPageCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*) from auth_point
+    <where>
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+  </select>
+</mapper>

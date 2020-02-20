@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mybatis.dbs.db1.dao.ComMemberMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.dbs.db1.model.ComMember">
+    <constructor>
+      <idArg column="MEMBER_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="COM_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="USER_ID" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="IS_DISABLED" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="CREATED_ON" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="CREATED_BY" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="MODIFIED_ON" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="MODIFIED_BY" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    MEMBER_ID, COM_ID, USER_ID, IS_DISABLED, CREATED_ON, CREATED_BY, MODIFIED_ON, MODIFIED_BY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from com_member
+    where MEMBER_ID = #{memberId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from com_member
+    where MEMBER_ID = #{memberId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.dbs.db1.model.ComMember"
+          useGeneratedKeys="true" keyProperty="memberId">
+    <selectKey keyProperty="memberId" resultType="String" order="BEFORE">
+      SELECT CONCAT("CM-",seq('PRIMARYKEY'))
+    </selectKey>
+    insert into com_member (MEMBER_ID, COM_ID, USER_ID, 
+      IS_DISABLED, CREATED_ON, CREATED_BY, 
+      MODIFIED_ON, MODIFIED_BY)
+    values (#{memberId,jdbcType=CHAR}, #{comId,jdbcType=CHAR}, #{userId,jdbcType=CHAR}, 
+      #{isDisabled,jdbcType=CHAR}, #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=CHAR}, 
+      #{modifiedOn,jdbcType=TIMESTAMP}, #{modifiedBy,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.dbs.db1.model.ComMember">
+    insert into com_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        MEMBER_ID,
+      </if>
+      <if test="comId != null">
+        COM_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="isDisabled != null">
+        IS_DISABLED,
+      </if>
+      <if test="createdOn != null">
+        CREATED_ON,
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY,
+      </if>
+      <if test="modifiedOn != null">
+        MODIFIED_ON,
+      </if>
+      <if test="modifiedBy != null">
+        MODIFIED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="memberId != null">
+        #{memberId,jdbcType=CHAR},
+      </if>
+      <if test="comId != null">
+        #{comId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null">
+        #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null">
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null">
+        #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.dbs.db1.model.ComMember">
+    update com_member
+    <set>
+      <if test="comId != null">
+        COM_ID = #{comId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null">
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null">
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null">
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </set>
+    where MEMBER_ID = #{memberId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.dbs.db1.model.ComMember">
+    update com_member
+    set COM_ID = #{comId,jdbcType=CHAR},
+      USER_ID = #{userId,jdbcType=CHAR},
+      IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=CHAR},
+      MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      MODIFIED_BY = #{modifiedBy,jdbcType=CHAR}
+    where MEMBER_ID = #{memberId,jdbcType=CHAR}
+  </update>
+
+
+  <select id="selectForPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from com_member
+    <where>
+      <if test="comId != null">
+        COM_ID = #{comId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null">
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null">
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null">
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+    limit #{start},#{end}
+  </select>
+
+  <select id="selectForPageCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*) from com_member
+    <where>
+      <if test="comId != null">
+        COM_ID = #{comId,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null">
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null">
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null">
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null">
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.dbs.db1.dao.CompanyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.dbs.db1.model.Company" >
+    <constructor >
+      <idArg column="COM_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PRINCIPAL_ID" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IS_DISABLED" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="QUICK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CREATED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    COM_ID, NAME, PRINCIPAL_ID, IS_DISABLED, QUICK_CODE, CREATED_BY, CREATED_ON, MODIFIED_ON, 
+    MODIFIED_BY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from company
+    where COM_ID = #{comId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from company
+    where COM_ID = #{comId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.dbs.db1.model.Company"
+          useGeneratedKeys="true" keyProperty="comId">
+    <selectKey keyProperty="comId" resultType="String" order="BEFORE">
+      SELECT CONCAT("COM-",seq('PRIMARYKEY'))
+    </selectKey>
+    insert into company (COM_ID, NAME, PRINCIPAL_ID, 
+      IS_DISABLED, QUICK_CODE, CREATED_BY, 
+      CREATED_ON, MODIFIED_ON, MODIFIED_BY
+      )
+    values (#{comId,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{principalId,jdbcType=CHAR}, 
+      #{isDisabled,jdbcType=CHAR}, #{quickCode,jdbcType=VARCHAR}, #{createdBy,jdbcType=CHAR}, 
+      #{createdOn,jdbcType=TIMESTAMP}, #{modifiedOn,jdbcType=TIMESTAMP}, #{modifiedBy,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.dbs.db1.model.Company" >
+    insert into company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        COM_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="principalId != null" >
+        PRINCIPAL_ID,
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED,
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comId != null" >
+        #{comId,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        #{principalId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.dbs.db1.model.Company" >
+    update company
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        PRINCIPAL_ID = #{principalId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </set>
+    where COM_ID = #{comId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.dbs.db1.model.Company" >
+    update company
+    set NAME = #{name,jdbcType=VARCHAR},
+      PRINCIPAL_ID = #{principalId,jdbcType=CHAR},
+      IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      CREATED_BY = #{createdBy,jdbcType=CHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      MODIFIED_BY = #{modifiedBy,jdbcType=CHAR}
+    where COM_ID = #{comId,jdbcType=CHAR}
+  </update>
+
+  <select id="selectForPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from company
+    <where>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        PRINCIPAL_ID = #{principalId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+    limit #{start},#{end}
+  </select>
+
+  <select id="selectForPageCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*) from company
+    <where>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="principalId != null" >
+        PRINCIPAL_ID = #{principalId,jdbcType=CHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+  </select>
+</mapper>

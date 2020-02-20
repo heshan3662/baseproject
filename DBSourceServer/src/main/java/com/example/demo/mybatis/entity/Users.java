@@ -1,13 +1,15 @@
-package com.example.demo.mybatise.entity;
+package com.example.demo.mybatis.entity;
 
 import io.swagger.annotations.ApiModel;
 
 
-@ApiModel(value = "Test", description = "测试")
-public class Test  {
+@ApiModel(value = "Users", description = "测试")
+public class Users   {
     private Long id;
     private String name;
+    private String userName;
     private Integer age;
+    private Double balance;
 
     public Long getId() {
         return id;
@@ -25,6 +27,13 @@ public class Test  {
         this.name = name;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public Integer getAge() {
         return age;
@@ -34,4 +43,13 @@ public class Test  {
         this.age = age;
     }
 
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
 }
+

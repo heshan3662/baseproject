@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mybatis.dbs.db1.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.mybatis.dbs.db1.model.Menu" >
+    <constructor >
+      <idArg column="MENU_ID" jdbcType="VARCHAR" javaType="java.lang.Long" />
+      <arg column="MODULE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="TITLE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="PID" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="URL" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ICON" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IS_DISABLED" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="QUICK_CODE" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="CREATED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CREATED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="MODIFIED_ON" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="MODIFIED_BY" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MENU_ID, MODULE, TITLE, PID, URL, ICON, IS_DISABLED, QUICK_CODE, CREATED_ON, CREATED_BY, 
+    MODIFIED_ON, MODIFIED_BY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where MENU_ID = #{menuId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from menu
+    where MENU_ID = #{menuId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.mybatis.dbs.db1.model.Menu"
+          useGeneratedKeys="true" keyProperty="menuId">
+    <selectKey keyProperty="menuId" resultType="String" order="BEFORE">
+      SELECT CONCAT("ME-",seq('PRIMARYKEY'))
+    </selectKey>
+    insert into menu (MENU_ID, MODULE, TITLE, 
+      PID, URL, ICON, IS_DISABLED, 
+      QUICK_CODE, CREATED_ON, CREATED_BY, 
+      MODIFIED_ON, MODIFIED_BY)
+    values (#{menuId,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{pid,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{isDisabled,jdbcType=CHAR},
+      #{quickCode,jdbcType=VARCHAR}, #{createdOn,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=CHAR}, 
+      #{modifiedOn,jdbcType=TIMESTAMP}, #{modifiedBy,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.mybatis.dbs.db1.model.Menu" >
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        MENU_ID,
+      </if>
+      <if test="module != null" >
+        MODULE,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="pid != null" >
+        PID,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="icon != null" >
+        ICON,
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED,
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE,
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON,
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY,
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON,
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.mybatis.dbs.db1.model.Menu" >
+    update menu
+    <set >
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </set>
+    where MENU_ID = #{menuId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.mybatis.dbs.db1.model.Menu" >
+    update menu
+    set MODULE = #{module,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      PID = #{pid,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      CREATED_BY = #{createdBy,jdbcType=CHAR},
+      MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      MODIFIED_BY = #{modifiedBy,jdbcType=CHAR}
+    where MENU_ID = #{menuId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectForPage" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    select
+    <include refid="Base_Column_List" />
+    from menu
+    <where>
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+    limit #{start},#{end}
+  </select>
+
+  <select id="selectForPageCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(*) from menu
+    <where>
+      <if test="module != null" >
+        MODULE = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isDisabled != null" >
+        IS_DISABLED = #{isDisabled,jdbcType=CHAR},
+      </if>
+      <if test="quickCode != null" >
+        QUICK_CODE = #{quickCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createdOn != null" >
+        CREATED_ON = #{createdOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        CREATED_BY = #{createdBy,jdbcType=CHAR},
+      </if>
+      <if test="modifiedOn != null" >
+        MODIFIED_ON = #{modifiedOn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedBy != null" >
+        MODIFIED_BY = #{modifiedBy,jdbcType=CHAR},
+      </if>
+    </where>
+  </select>
+</mapper>

@@ -8,7 +8,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.*;
-
 /**
  * 生成数据库表对应的实体类
  */
@@ -35,19 +34,20 @@ public class MySQLGeneratorEntityUtil {
     private static final String SQL = "SELECT * FROM ";// 数据库操作
 
     // 数据库配置信息
-    private static final String URL = "jdbc:mysql://127.0.0.1:3306/pms";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/cloud-main";
     private static final String NAME = "root";
     private static final String PASS = "123456";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
     //指定实体生成所在包的路径
     private static String basePath = new File("").getAbsolutePath();
+
     //指定包名
     private static String packageOutPath = "com.example.login.entity";
     //作者名字
     private String authorName = "heshan";
     //指定需要生成的表的表名，全部生成设置为null
-    private String[] generateTables = "gd_user".split(",");
+    private String[] generateTables = "menu,auth_point".split(",");
     //主键
     private static String pk;
 
@@ -260,6 +260,8 @@ public class MySQLGeneratorEntityUtil {
             return "Blod";
         } else if (sqlType.equalsIgnoreCase("decimal")) {
             return "BigDecimal";
+        }else if (sqlType.equalsIgnoreCase("timestamp")) {
+            return "Timestamp";
         }
         return null;
     }
@@ -271,6 +273,7 @@ public class MySQLGeneratorEntityUtil {
      */
     private static String pkgDirName() {
         String dirName = basePath + "/src/" + packageOutPath.replace(".", "/");
+        System.out.println(dirName);
         File dir = new File(dirName);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -353,7 +356,7 @@ public class MySQLGeneratorEntityUtil {
                 colTypes[i] = rsmd.getColumnTypeName(i + 1);
                 if (colTypes[i].equalsIgnoreCase("datetime"))
                     needUtil = true;
-                if (colTypes[i].equalsIgnoreCase("image") || colTypes[i].equalsIgnoreCase("text"))
+                if (colTypes[i].equalsIgnoreCase("image") || colTypes[i].equalsIgnoreCase("text")|| colTypes[i].equalsIgnoreCase("timestamp"))
                     needSql = true;
                 colSizes[i] = rsmd.getColumnDisplaySize(i + 1);
             }

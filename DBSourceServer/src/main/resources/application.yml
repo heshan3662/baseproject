@@ -13,11 +13,11 @@ spring:
       discovery:
         enabled: true # 通过服务发现的方式去找配置中心
         service-id: config-server # 配置中心的名字，直接配置名称可以在配置中心集群的时候实现负载均衡
-      name: ds,ds-mybatise,redis,client
+      name: ds,ds-mybatis,redis,client
       profile: dev # 对应配置中心文件的${profile}部分
 #    2.通过调用远程服务的文件
 #    config:
-#      name: ds,ds-mybatise
+#      name: ds,ds-mybatis
 #      profile:  dev     #服务环境名称  例如 {name}-{profile} = ds-dev.yml
 #      uri: http://127.0.0.1:8888  #http://127.0.0.1:8888/ds-dev.yml
     management:
@@ -45,15 +45,15 @@ spring:
 #      password: 123456
 #      driver-class-name: com.mysql.jdbc.Driver
 #      type: com.alibaba.druid.pool.DruidDataSource
-##    mybatise 连接多数据源配置
-#  mysql-mybatise:
+##    mybatis 连接多数据源配置
+#  mysql-mybatis:
 #    datasource:
 #      jdbcurl: jdbc:mysql://127.0.0.1:3306/commonDB?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
 #      username: root
 #      password: 123456
 #      driver-class-name: com.mysql.jdbc.Driver
 #      type: com.alibaba.druid.pool.DruidDataSource
-#  sqlserver-mybatise:
+#  sqlserver-mybatis:
 #    datasource:
 #      jdbcurl: jdbc:mysql://127.0.0.1:3306/guideir?useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true
 #      username: root

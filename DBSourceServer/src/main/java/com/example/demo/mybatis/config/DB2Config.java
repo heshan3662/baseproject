@@ -1,4 +1,4 @@
-package com.example.demo.mybatise.config;
+package com.example.demo.mybatis.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -16,31 +16,31 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.example.demo.mybatise.dao.db2.mapper", sqlSessionFactoryRef = "db2SessionFactory")
+@MapperScan(basePackages = "com.example.demo.mybatis.dbs.db2.mapper", sqlSessionFactoryRef = "db2SessionFactory")
 public class DB2Config {
 
 
-    @Bean(name = "db2Mybatise")
-    @ConfigurationProperties(prefix = "spring.db2-mybatise.datasource")
+    @Bean(name = "db2Mybatis")
+    @ConfigurationProperties(prefix = "spring.db2-mybatis.datasource")
     public DataSource mysqlDataSource() {
 
         return DataSourceBuilder.create().build();
     }
 
     @Bean(name = "db2TransactionManager")
-    public DataSourceTransactionManager transactionManager(@Qualifier("db2Mybatise") DataSource dataSource) {
+    public DataSourceTransactionManager transactionManager(@Qualifier("db1Mybatis") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "db2SessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("db2Mybatise") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("db1Mybatis") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(true);
         bean.setConfiguration(configuration);
         bean.setDataSource(dataSource);
         ResourcePatternResolver rsourcePatternResolver = new PathMatchingResourcePatternResolver();
-        bean.setMapperLocations(rsourcePatternResolver.getResources("classpath*:com/example/demo/mybatise/dao/db2/*.xml"));
+        bean.setMapperLocations(rsourcePatternResolver.getResources("classpath*:com/example/demo/mybatis/dbs/db2/*.xml"));
         return bean.getObject();
     }
 
