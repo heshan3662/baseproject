@@ -1,5 +1,6 @@
 package com.example.login.DBinterface;
 
+import com.example.login.entity.responsetype.ApiRes;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,4 +25,15 @@ public interface DBinterface {
      int update( @RequestParam(required = true)String  db ,
                  @RequestParam(required = true)String sql  );
 
+
+    @RequestMapping(value = "/jdbcTemplate/queryForTotal", method = RequestMethod.POST)
+    Long queryForTotal( @RequestParam(required = true)String  db ,
+                @RequestParam(required = true)String sql  );
+
+    @RequestMapping(value = "/mybatisDBController/excute", method = RequestMethod.POST)
+    ApiRes excute(@RequestParam(required = true)String db,
+                  @RequestParam(required = true)String mapper,
+                  @RequestParam(required = true)String sqlid,
+                  @RequestParam(required = true)String params,
+                  @RequestParam(required = true)String paramsClass);
 }

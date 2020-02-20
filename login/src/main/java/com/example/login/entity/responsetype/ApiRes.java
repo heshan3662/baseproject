@@ -14,11 +14,19 @@ public class ApiRes<T> {
     private String _result_message = "";
     @ApiModelProperty(value = "返回数据")
     private T _data = null;
-
+    @ApiModelProperty(value = "总条数")
+    private Long  _total ;
     public T get_data() {
         return _data;
     }
 
+    public Long get_total() {
+        return _total;
+    }
+
+    public void set_total(Long _total) {
+        this._total = _total;
+    }
 //    public String get_action() {
 //        return _action;
 //    }
