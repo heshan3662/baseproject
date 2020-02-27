@@ -34,6 +34,9 @@ zuul:
 #    service-login: /login-service/**  #service-login：微服务注册名， login-service ：访问前缀
 #  ignored-patterns: /*-service/**
   routes:
-    ts:
+    login:
       path: /login-service/**
       serviceId: service-login
+    file:
+      path: /file-service/**
+      serviceId: service-file

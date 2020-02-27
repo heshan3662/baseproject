@@ -9,13 +9,14 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis操作工具类
  */
 
 @Service
-public class RedisUtils {
+public class RedisService {
 
     @Autowired(required = false)
     private RedisTemplate redisTemplate;
@@ -64,7 +65,23 @@ public class RedisUtils {
         return result;
     }
 
-
+    /**
+     * 写入缓存
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean set(final String key, Object value,Long days) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.set(key, value , days  );
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
     /**
      * 哈希 添加
      * @param key

@@ -1,13 +1,12 @@
 package com.example.demo.jdbctemplate.controller;
 
 import com.example.demo.jdbctemplate.service.DBTools;
-import com.example.demo.redis.config.RedisUtils;
+import com.example.demo.redis.config.RedisService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,7 @@ public class TemplateDBController {
     @Autowired
     DBTools DBTools;
     @Autowired
-    RedisUtils redisUtils;
+    RedisService redisService;
 
     @ApiOperation(value = "获取单条信息")
     @ApiImplicitParams({
